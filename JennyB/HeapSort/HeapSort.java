@@ -15,19 +15,33 @@ import java.util.ArrayList;
 
 public class HeapSort {
 
-    private static ALHeap _heap = new ALHeap();
-
     //returns a sorted version of data, data unchanged
     public static Integer[] sort( Integer[] data ) {
-	Integer[]  retArr = new Integer[ data.length ];
-	for ( Integer i : data ) { //O(n)
-	    _heap.add( i );
-	}
-	for ( int i = 0; i < data.length; i++ ) { //O(n)
-	    retArr[i] = _heap.removeMin(); //O(logn)
-	}
-	return retArr;
+	heapify( data );
     } //O(nlogn)
+
+    private void heapify( Integer[] data ) {
+	for ( int i = 1; i < data.length; i++ ) {
+	    int pos = i;
+	    int parentPos;
+	    while ( pos > 0 ) {
+		parentPos = ( pos - 1 ) / 2;
+		if ( data[pos] < data[parentPos] ) {
+		    swap( data, pos, parentPos );
+		    pos = parentPos;
+		}
+		else {
+		    break;
+		}
+	    } 
+	}
+    }
+
+    private void swap( Integer[] data, int pos1, int pos2 ) {
+	int temp = data[pos1];
+	data[pos1] = data[pos2];
+	data[pos2] = temp;
+    }
 
     public static void main( String[] args ) {
 
